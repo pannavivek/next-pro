@@ -1,7 +1,7 @@
 import { getServicesPage } from '@/lib/wordpress';
 import Link from 'next/link';
 import Image from 'next/image';
-import DOMPurify from 'isomorphic-dompurify';
+//import DOMPurify from 'isomorphic-dompurify';
 
 import Breadcrumb from '@/components/Breadcrumb';
 import { CTABanner } from '@/components/Sections';
@@ -38,8 +38,8 @@ return ( <main>
 
   {/* Service Cards */}
   <section className="pb-20 md:pb-28">
-    <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {services?.map((s) => {
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {services?.map((s: any) => {
           const icon = s.acfService?.serviceicon?.node;
           const featured = s.featuredImage?.node;
 
@@ -51,7 +51,6 @@ return ( <main>
             >
               <article className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
 
-                {/* Featured Image */}
                 {featured && (
                   <div className="relative h-60 overflow-hidden">
                     <Image
@@ -65,7 +64,6 @@ return ( <main>
 
                 <div className="p-6">
 
-                  {/* Icon */}
                   {icon && (
                     <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-100">
                       <Image
@@ -77,29 +75,16 @@ return ( <main>
                     </div>
                   )}
 
-                  {/* Service Title */}
                   <h3 className="mb-3 text-2xl font-bold text-gray-900">
                     {s.acfService?.servicetitle || s.title}
                   </h3>
 
-                  {/* Short Description */}
                   {s.acfService?.serviceshortdesc && (
                     <p className="mb-4 text-gray-600 line-clamp-3">
                       {s.acfService.serviceshortdesc}
                     </p>
                   )}
 
-                  {/* Content */}
-                  {/* {s.content && (
-                    <div
-                      className="prose prose-sm max-w-none text-gray-700 line-clamp-4"
-                      dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(s.content),
-                      }}
-                    />
-                  )} */}
-
-                  {/* Button */}
                   <div className="mt-6">
                     <span className="inline-flex items-center font-semibold text-primary transition-all group-hover:translate-x-1">
                       Learn More →
