@@ -30,8 +30,12 @@ interface Props {
   services: Service[];
 }
 
-const truncateText = (text: string, limit: number) => {
+const truncateText = (
+  text: string | undefined,
+  limit: number
+) => {
   if (!text) return '';
+
   return text.length > limit
     ? text.substring(0, limit) + '...'
     : text;
@@ -88,8 +92,11 @@ export default function ServicesSection({ services }: Props) {
                     </h3>
 
                     <p className="text-muted line-clamp-3">
-                          {truncateText(service.acfService?.serviceshortdesc, 120)}
-                    </p>
+                        {truncateText(
+                          service.acfService?.serviceshortdesc,
+                          120
+                        )}
+                      </p>
                     </div>
                 </article>
                 </Link>
