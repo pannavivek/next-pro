@@ -18,7 +18,7 @@ export async function generateMetadata({
 }) {
   const { slug } = await params;
 
-  const caseStudy = await getCaseStudyBySlug(slug);
+  const caseStudy: any = await getCaseStudyBySlug(slug);
 
   return createMetadata(caseStudy?.seo);
 }
@@ -54,6 +54,7 @@ export default async function SingleCaseStudyPage({
   const icon = acf?.casestudyicon?.node;
 
   const title = acf?.casestudytitle || cs.title;
+  const content = cs.acfCasestudyies?.casestudyshortdesc || cs.content;
 
   return (
     <main>
@@ -70,19 +71,19 @@ export default async function SingleCaseStudyPage({
       />
 
       {/* Hero */}
-      <section className="py-16 md:py-20">
-        <div className="max-w-wrap mx-auto px-6 md:px-10">
-          <h1 className="font-display text-4xl md:text-6xl leading-[1.08] max-w-3xl mb-8">
-            {title}
-          </h1>
+        <section className="py-16 md:py-20">
+          <div className="max-w-wrap mx-auto px-6 md:px-10">
+            <h1 className="font-display text-4xl md:text-6xl leading-[1.08] max-w-3xl mb-8">
+              {title}
+            </h1>
 
-          {acf?.casestudyshortdesc && (
-            <p className="text-lg text-muted max-w-2xl">
-              {acf.casestudyshortdesc}
-            </p>
-          )}
-        </div>
-      </section>
+            {content && (
+              <p className="text-lg text-muted max-w-2xl">
+                {content}
+              </p>
+            )}
+          </div>
+        </section>
 
       {/* Featured Image */}
       {featured && (

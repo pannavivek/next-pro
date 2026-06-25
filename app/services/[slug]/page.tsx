@@ -13,6 +13,7 @@ import Image from 'next/image';
 import DOMPurify from 'isomorphic-dompurify';
 
 // SEO
+
 export async function generateMetadata({
   params,
 }: {
@@ -20,12 +21,10 @@ export async function generateMetadata({
 }) {
   const { slug } = await params;
 
-  const service = await getServiceBySlug(slug);
+  const service: any = await getServiceBySlug(slug);
 
   return createMetadata(service?.seo);
 }
-
-
 
 // Static Routes
 export async function generateStaticParams() {

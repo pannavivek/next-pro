@@ -463,7 +463,19 @@ export async function getPostBySlug(slug: string): Promise<BlogPost> {
         date
         content
         excerpt
-         ${SEO_FRAGMENT}
+          seo?: {
+            title?: string;
+            metaDesc?: string;
+            canonical?: string;
+            opengraphTitle?: string;
+            opengraphDescription?: string;
+            opengraphImage?: {
+              sourceUrl?: string;
+            };
+            twitterTitle?: string;
+            twitterDescription?: string;
+            fullHead?: string;
+          };
         featuredImage {
           node {
             sourceUrl
@@ -526,7 +538,7 @@ export interface CaseStudyFeature {
 
 export interface AcfCaseStudyFields {
   casestudytitle: string;
-  casestudy: string;
+  casestudyshortdesc: string;
   casestudyicon?: CaseStudyImage;
 }
 
@@ -545,7 +557,7 @@ export interface CaseStudy {
 
   acfCasestudyies?: {
     casestudytitle: string;
-    casestudy: string;
+    casestudyshortdesc: string;
     casestudyicon?: {
       node: {
         sourceUrl: string;

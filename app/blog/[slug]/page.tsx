@@ -12,9 +12,9 @@ export async function generateMetadata({
 }) {
   const { slug } = await params;
 
-  const blog = await getPostBySlug(slug);
+  const blog: any = await getPostBySlug(slug);
 
-  return createMetadata(blog.seo);
+  return createMetadata(blog?.seo);
 }
 
 
