@@ -12,14 +12,14 @@ export async function generateMetadata() {
 
 export default async function CaseStudyPage() {
   let pageData = null;
-  let caseStudies = [];
-  let pageInfo = null;
+  let caseStudies: any[] = [];
+  let pageInfo: any = null;
 
   try {
     const data = await getCaseStudiesPage(6);
 
     pageData = data.page;
-    caseStudies = data.casestudies;
+    caseStudies = data.casestudies || [];
     pageInfo = data.pageInfo;
   } catch (error) {
     console.error(
@@ -34,31 +34,34 @@ export default async function CaseStudyPage() {
         items={[{ label: 'Case Studies' }]}
       />
 
+      {/* Hero */}
       <section className="py-16 md:py-24">
         <div className="max-w-wrap mx-auto px-6 md:px-10">
           <p className="eyebrow mb-6">
-            Proof of work
+            Proof of Work
           </p>
 
           <h1 className="font-display text-4xl md:text-6xl leading-[1.08] max-w-2xl">
             {pageData?.template?.acfCasestudyPage
-              ?.title ||
-              'Our Case Studies'}
+              ?.title || 'Our Case Studies'}
           </h1>
         </div>
       </section>
 
+      {/* Case Studies */}
       <section className="pb-20 md:pb-28">
         <div className="max-w-wrap mx-auto px-6 md:px-10">
+
           <LoadMoreCaseStudies
             initialPosts={caseStudies}
             initialCursor={
-              pageInfo?.endCursor
+              pageInfo?.endCursor ?? null
             }
             hasNextPage={
-              pageInfo?.hasNextPage
+              pageInfo?.hasNextPage ?? false
             }
           />
+
         </div>
       </section>
 
