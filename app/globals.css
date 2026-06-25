@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #FAFAF8;
+  --color-ink: #1C1C1A;
+  --color-sage: #3D5A4C;
+  --color-sage-dark: #2C4338;
+  --color-sage-light: #5A7C6B;
+  --color-brass: #C9A876;
+  --color-brass-light: #DDC49A;
+  --color-line: #E8E6DF;
+  --color-muted: #6B6B63;
+
+  --font-display: 'Fraunces', serif;
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: 'Inter', sans-serif;
+}
+
+.font-display {
+  font-family: 'Fraunces', serif;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Signature element: section eyebrow with sage spine */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.eyebrow::before {
+  content: '';
+  display: block;
+  width: 1.25rem;
+  height: 1.5px;
+  background: var(--color-sage);
+}
+
+/* WYSIWYG content from WordPress */
+.wysiwyg-content {
+  font-family: 'Inter', sans-serif;
+  color: var(--color-ink);
+  line-height: 1.75;
+}
+.wysiwyg-content p { margin-bottom: 1.25rem; }
+.wysiwyg-content h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.75rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+.wysiwyg-content h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.375rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+.wysiwyg-content ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; }
+.wysiwyg-content a { color: var(--color-sage); text-decoration: underline; text-underline-offset: 2px; }
+.wysiwyg-content img { border-radius: 0.5rem; margin: 1.5rem 0; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Visible keyboard focus */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 2px;
+}
+
+.hero-swiper .swiper-button-next,
+.hero-swiper .swiper-button-prev {
+  color: #fff;
+}
+
+.hero-swiper .swiper-pagination-bullet {
+  background: #fff;
+  opacity: 0.5;
+}
+
+.hero-swiper .swiper-pagination-bullet-active {
+  opacity: 1;
+}
+
+.testimonial-swiper .swiper-button-next,
+.testimonial-swiper .swiper-button-prev {
+  color: white;
+}
+
+.testimonial-swiper .swiper-pagination {
+  margin-top: 20px;
+}
+
+.testimonial-swiper .swiper-pagination-bullet {
+  background: white;
+  opacity: 0.5;
+}
+
+.testimonial-swiper
+  .swiper-pagination-bullet-active {
+  opacity: 1;
+}
