@@ -17,6 +17,7 @@ export async function generateMetadata({
   return createMetadata(blog.seo);
 }
 
+
 export async function generateStaticParams() {
   const posts = await getAllPostSlugs();
   return posts.map((post) => ({ slug: post.slug }));

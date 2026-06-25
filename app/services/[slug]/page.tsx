@@ -25,6 +25,8 @@ export async function generateMetadata({
   return createMetadata(service?.seo);
 }
 
+
+
 // Static Routes
 export async function generateStaticParams() {
   const services = await getAllServiceSlugs();

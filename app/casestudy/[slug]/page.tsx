@@ -44,9 +44,7 @@ export default async function SingleCaseStudyPage({
   if (!cs) {
     return (
       <main className="max-w-wrap mx-auto px-6 md:px-10 py-24">
-        <p className="text-muted">
-          Case study not found.
-        </p>
+        <p className="text-muted">Case study not found.</p>
       </main>
     );
   }
@@ -55,8 +53,7 @@ export default async function SingleCaseStudyPage({
   const featured = cs.featuredImage?.node;
   const icon = acf?.casestudyicon?.node;
 
-  const title =
-    acf?.casestudytitle || cs.title;
+  const title = acf?.casestudytitle || cs.title;
 
   return (
     <main>
@@ -79,9 +76,9 @@ export default async function SingleCaseStudyPage({
             {title}
           </h1>
 
-          {acf?.casestudy && (
+          {acf?.casestudyshortdesc && (
             <p className="text-lg text-muted max-w-2xl">
-              {acf.casestudy}
+              {acf.casestudyshortdesc}
             </p>
           )}
         </div>
@@ -124,9 +121,7 @@ export default async function SingleCaseStudyPage({
               <div
                 className="wysiwyg-content"
                 dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(
-                    cs.content
-                  ),
+                  __html: DOMPurify.sanitize(cs.content),
                 }}
               />
             </div>
