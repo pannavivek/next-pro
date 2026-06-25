@@ -42,6 +42,7 @@ export default async function SingleBlogPage({
   const featured = post.featuredImage?.node;
   const author = post.author?.node;
   const category = post.categories?.nodes?.[0];
+  console.log(post.content);
 
   return (
     <main>

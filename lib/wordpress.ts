@@ -463,25 +463,28 @@ export async function getPostBySlug(slug: string): Promise<BlogPost> {
         date
         content
         excerpt
-          seo?: {
-            title?: string;
-            metaDesc?: string;
-            canonical?: string;
-            opengraphTitle?: string;
-            opengraphDescription?: string;
-            opengraphImage?: {
-              sourceUrl?: string;
-            };
-            twitterTitle?: string;
-            twitterDescription?: string;
-            fullHead?: string;
-          };
+
+        seo {
+          title
+          metaDesc
+          canonical
+          opengraphTitle
+          opengraphDescription
+          opengraphImage {
+            sourceUrl
+          }
+          twitterTitle
+          twitterDescription
+          fullHead
+        }
+
         featuredImage {
           node {
             sourceUrl
             altText
           }
         }
+
         author {
           node {
             name
@@ -490,6 +493,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost> {
             }
           }
         }
+
         categories {
           nodes {
             name
@@ -498,12 +502,12 @@ export async function getPostBySlug(slug: string): Promise<BlogPost> {
         }
       }
     }
-  `,
+    `,
     { slug }
   );
+
   return data.post;
 }
-
 
 
 // ─── ALL POST SLUGS (for generateStaticParams) ──────────────
