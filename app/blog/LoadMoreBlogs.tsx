@@ -4,15 +4,48 @@ import { useState } from 'react';
 import DOMPurify from 'isomorphic-dompurify';
 import { BlogCard } from '@/components/Cards';
 
+interface BlogPost {
+  title: string;
+  slug: string;
+  excerpt?: string;
+  date: string;
+  featuredImage?: {
+    node?: {
+      sourceUrl?: string;
+      altText?: string;
+    };
+  };
+  categories?: {
+    nodes?: {
+      name: string;
+    }[];
+  };
+}
+
+interface LoadMoreBlogsProps {
+  initialPosts: BlogPost[];
+  initialCursor: string | null;
+  hasNextPage: boolean;
+}
+
 export default function LoadMoreBlogs({
-  initialPosts = [],
-  initialCursor = null,
-  hasNextPage: initialHasNextPage = false,
-}) {
-  const [posts, setPosts] = useState(initialPosts);
-  const [cursor, setCursor] = useState(initialCursor);
-  const [hasNextPage, setHasNextPage] = useState(initialHasNextPage);
-  const [loading, setLoading] = useState(false);
+  initialPosts,
+  initialCursor,
+  hasNextPage: initialHasNextPage,
+}: LoadMoreBlogsProps) {
+  const [posts, setPosts] = useState<BlogPost[]>(
+    initialPosts || []
+  );
+
+  const [cursor, setCursor] = useState<string | null>(
+    initialCursor
+  );
+
+  const [hasNextPage, setHasNextPage] =
+    useState<boolean>(initialHasNextPage);
+
+  const [loading, setLoading] =
+    useState<boolean>(false);
 
   async function loadMore() {
     if (!cursor) return;
@@ -21,8 +54,14 @@ export default function LoadMoreBlogs({
 
     try {
       const res = await fetch(
-        `/api/posts?after=${encodeURIComponent(cursor)}`
+        `/api/posts?after=${encodeURIComponent(
+          cursor
+        )}`
       );
+
+      if (!res.ok) {
+        throw new Error('Failed to load posts');
+      }
 
       const data = await res.json();
 
@@ -31,9 +70,17 @@ export default function LoadMoreBlogs({
         ...(data.nodes || []),
       ]);
 
-      setCursor(data.pageInfo?.endCursor || null);
+      setCursor(
+        data.pageInfo?.endCursor || null
+      );
+
       setHasNextPage(
         data.pageInfo?.hasNextPage || false
+      );
+    } catch (error) {
+      console.error(
+        'Load More Posts Error:',
+        error
       );
     } finally {
       setLoading(false);
@@ -56,17 +103,19 @@ export default function LoadMoreBlogs({
               href={`/blog/${post.slug}`}
               title={post.title}
               excerpt={excerptText}
-              image={post.featuredImage?.node?.sourceUrl}
-              date={new Date(post.date).toLocaleDateString(
-                'en-IN',
-                {
-                  year: 'numeric',
-                  month: 'short',
-                  day: 'numeric',
-                }
-              )}
+              image={
+                post.featuredImage?.node?.sourceUrl
+              }
+              date={new Date(
+                post.date
+              ).toLocaleDateString('en-IN', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+              })}
               category={
-                post.categories?.nodes?.[0]?.name
+                post.categories?.nodes?.[0]?.name ||
+                ''
               }
             />
           );
@@ -78,9 +127,11 @@ export default function LoadMoreBlogs({
           <button
             onClick={loadMore}
             disabled={loading}
-            className="px-6 py-3 border rounded-lg"
+            className="px-6 py-3 border rounded-lg hover:bg-black hover:text-white transition-colors disabled:opacity-50"
           >
-            {loading ? 'Loading...' : 'Load More'}
+            {loading
+              ? 'Loading...'
+              : 'Load More'}
           </button>
         </div>
       )}

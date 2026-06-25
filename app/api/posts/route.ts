@@ -6,10 +6,7 @@ export async function GET(req: Request) {
 
   const after = searchParams.get('after');
 
-  const data = await getPosts(
-    6,
-    after
-  );
+  const data = await getPosts(6, after);
 
   return NextResponse.json({
     nodes: data.posts,

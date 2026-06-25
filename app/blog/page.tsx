@@ -36,10 +36,10 @@ export default async function BlogPage() {
         </div>
         {/* Posts Grid */}
        <LoadMoreBlogs
-        initialPosts={postsData.posts}
-        initialCursor={postsData.pageInfo.endCursor}
-        hasNextPage={postsData.pageInfo.hasNextPage}
-      />
+          initialPosts={postsData.posts}
+          initialCursor={postsData.pageInfo.endCursor}
+          hasNextPage={postsData.pageInfo.hasNextPage}
+        />
       </section>
 
       
