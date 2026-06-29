@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 
-const FORM_ID = process.env.NEXT_PUBLIC_CF7_FORM_ID;
+const WP_URL = process.env.NEXT_PUBLIC_WP_URL!;
+const FORM_ID = process.env.NEXT_PUBLIC_CF7_FORM_ID!;
 
-const CF7_ENDPOINT =
-  `${process.env.NEXT_PUBLIC_WP_URL}/wp-json/contact-form-7/v1/contact-forms/${FORM_ID}/feedback`;
+const CF7_ENDPOINT = `${WP_URL}/wp-json/contact-form-7/v1/contact-forms/${FORM_ID}/feedback`;
 
 export default function ContactForm() {
   const [status, setStatus] = useState<
@@ -28,19 +28,34 @@ export default function ContactForm() {
 
     const body = new FormData();
 
-    Object.entries(formData).forEach(([key, value]) => {
-      body.append(key, value);
-    });
+    // Contact Form 7 required hidden fields
+    body.append('_wpcf7', FORM_ID);
+    body.append('_wpcf7_version', '6.1.6');
+    body.append('_wpcf7_locale', 'en_US');
+    body.append('_wpcf7_unit_tag', `wpcf7-f${FORM_ID}-o1`);
+    body.append('_wpcf7_container_post', '0');
+
+    // Form fields
+    body.append('your_name', formData.your_name);
+    body.append('your_email', formData.your_email);
+    body.append('your_subject', formData.your_subject);
+    body.append('your_message', formData.your_message);
 
     try {
       const response = await fetch(CF7_ENDPOINT, {
         method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
         body,
       });
 
       const result = await response.json();
 
-      if (result.status === 'mail_sent') {
+      if (
+        response.ok &&
+        result.status === 'mail_sent'
+      ) {
         setStatus('success');
 
         setFormData({
@@ -76,7 +91,7 @@ export default function ContactForm() {
         className="space-y-6"
       >
         <div>
-          <label className="block mb-2 text-sm">
+          <label className="mb-2 block text-sm">
             Name
           </label>
 
@@ -90,12 +105,12 @@ export default function ContactForm() {
                 your_name: e.target.value,
               })
             }
-            className="w-full border rounded-lg px-4 py-3"
+            className="w-full rounded-lg border px-4 py-3"
           />
         </div>
 
         <div>
-          <label className="block mb-2 text-sm">
+          <label className="mb-2 block text-sm">
             Email
           </label>
 
@@ -109,12 +124,12 @@ export default function ContactForm() {
                 your_email: e.target.value,
               })
             }
-            className="w-full border rounded-lg px-4 py-3"
+            className="w-full rounded-lg border px-4 py-3"
           />
         </div>
 
         <div>
-          <label className="block mb-2 text-sm">
+          <label className="mb-2 block text-sm">
             Subject
           </label>
 
@@ -127,12 +142,12 @@ export default function ContactForm() {
                 your_subject: e.target.value,
               })
             }
-            className="w-full border rounded-lg px-4 py-3"
+            className="w-full rounded-lg border px-4 py-3"
           />
         </div>
 
         <div>
-          <label className="block mb-2 text-sm">
+          <label className="mb-2 block text-sm">
             Message
           </label>
 
@@ -146,14 +161,14 @@ export default function ContactForm() {
                 your_message: e.target.value,
               })
             }
-            className="w-full border rounded-lg px-4 py-3 resize-none"
+            className="w-full resize-none rounded-lg border px-4 py-3"
           />
         </div>
 
         <button
           type="submit"
           disabled={status === 'sending'}
-          className="px-8 py-3 rounded-lg bg-black text-white disabled:opacity-50"
+          className="rounded-lg bg-black px-8 py-3 text-white disabled:opacity-50"
         >
           {status === 'sending'
             ? 'Sending...'
