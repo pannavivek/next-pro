@@ -57,6 +57,7 @@ return ( <main>
                       src={featured.sourceUrl}
                       alt={featured.altText || s.title}
                       fill
+                      unoptimized
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
