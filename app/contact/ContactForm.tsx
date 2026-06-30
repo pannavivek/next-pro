@@ -7,6 +7,12 @@ const FORM_ID = process.env.NEXT_PUBLIC_CF7_FORM_ID!;
 
 const CF7_ENDPOINT = `${WP_URL}/wp-json/contact-form-7/v1/contact-forms/${FORM_ID}/feedback`;
 
+console.log('===================================='); 
+console.log('WP_URL:', WP_URL); 
+console.log('FORM_ID:', FORM_ID);
+console.log('CF7_ENDPOINT:', CF7_ENDPOINT); 
+console.log('====================================');
+
 export default function ContactForm() {
   const [status, setStatus] = useState<
     'idle' | 'sending' | 'success' | 'error'
